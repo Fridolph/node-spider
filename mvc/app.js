@@ -9,9 +9,19 @@ require('./services/mongodb_connection')
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-
+var api = require('./routes/api/index')
+// 自定义的错误处理中间件
+const errorHandler = require('./middlewares/error/http_error_handler')
 var app = express();
+// mongodb
+require('./services/mongodb_connecton')
 
+const cookieSession = require('cookie-session')
+app.use(cookieSession({
+  name: 'express_session',
+  keys: ['werisdfjjsdfjisdjfjilj'],
+  maxAge: 86400
+}))
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -25,14 +35,17 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
+app.use('/api', api);
 app.use('/users', users);
-
+app.use(errorHandler())
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
+// app.use(function(req, res, next) {
+//   var err = new Error('Not Found');
+//   err.status = 404;
+//   next(err);
+// });
+// 用自己写的中间件来处理
+
 
 // error handler
 app.use(function(err, req, res, next) {
