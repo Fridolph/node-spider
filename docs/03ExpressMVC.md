@@ -22,21 +22,22 @@ services则有些特别，由于同层model之间解耦的需要，单个model�
 
 另：Express拾遗
 
-Request
+## Request
 
 req.params:识别定义路径时以冒号开头的参数
 
 "http://localhost:3000/user/laoyang"
 
-router.get('/user/:name',(req,res)=>{
-  console.log(req.params.name); // 请求 /name/hahah 则结果为 hahaha
-})
+    router.get('/user/:name',(req,res)=>{
+      console.log(req.params.name); // 请求 /name/hahah 则结果为 hahaha
+    })
+
 req.body:经过body-parser转码后的body对象
 req.method:请求方法
 req.query:经过node原生querystring或者qs库识别的http query "http://localhost:3200/?name=123&age=321"
 req.get:获取header
 
-Response
+## Response
 
 res.send:发送内容
 res.append:在请求头中加入内容
